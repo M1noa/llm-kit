@@ -1,0 +1,30 @@
+# Development files
+src/
+.gitignore
+.gitattributes
+tsconfig.json
+.eslintrc*
+.prettierrc*
+
+# Tests
+src/test.ts
+__tests__/
+*.test.ts
+*.spec.ts
+
+# Editor directories
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Build artifacts
+*.tsbuildinfo
+
+# Environment variables
+.env*
+
+# Only include compiled files
+!dist/

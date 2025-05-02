@@ -1,0 +1,68 @@
+{
+  "name": "llm-search",
+  "version": "1.0.1",
+  "description": "A Node.js module for searching and scraping web content, designed for LLMs but useful for any project where webscraping is needed!",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "test": "ts-node src/test.ts",
+    "lint": "eslint src/**/*.ts",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run test && npm run build"
+  },
+  "keywords": [
+    "search",
+    "scraping",
+    "llm",
+    "ai",
+    "wikipedia",
+    "hackernews",
+    "readability",
+    "google",
+    "duckduckgo",
+    "typescript",
+    "web-scraping",
+    "content-extraction"
+  ],
+  "author": {
+    "name": "Minoa",
+    "url": "https://github.com/M1noa"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@mozilla/readability": "^0.6.0",
+    "duck-duck-scrape": "^2.2.7",
+    "google-sr": "^5.0.0",
+    "jsdom": "^24.0.0",
+    "puppeteer": "^24.7.2",
+    "wikipedia": "^2.1.2"
+  },
+  "devDependencies": {
+    "@types/jsdom": "^21.1.6",
+    "@types/node": "^20.11.24",
+    "typescript": "^5.3.3",
+    "ts-node": "^10.9.2"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/M1noa/llm-search.git"
+  },
+  "bugs": {
+    "url": "https://github.com/M1noa/llm-search/issues"
+  },
+  "homepage": "https://github.com/M1noa/llm-search#readme",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "docs"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
