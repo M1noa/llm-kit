@@ -4,15 +4,15 @@
 
 ## Features
 
-- 🌐 Search multiple engines (Google, DuckDuckGo)
-- 📚 Wikipedia search and content extraction
-- 💻 HackerNews integration 
-- 📄 Webpage content extraction
-- 📝 Document parsing (PDF, DOCX, CSV)
-- 🖼️ Image OCR support
-- ⚡ No API keys required
-- 🔄 Automatic fallbacks
-- 🎯 TypeScript support
+- Search multiple engines (Google, DuckDuckGo)
+- Wikipedia search and content extraction
+- HackerNews scraping 
+- Webpage content extraction
+- Document parsing (PDF, DOCX, CSV)
+- Image OCR/text extraction support
+- **No API keys required at all**
+- Automatic fallbacks
+- TypeScript & Node support
 
 ## Installation
 
@@ -121,12 +121,17 @@ try {
 ## Dependencies
 
 This package uses these great libraries:
-- [pdf-parse](https://www.npmjs.com/package/pdf-parse) - PDF parsing
-- [docx4js](https://www.npmjs.com/package/docx4js) - DOCX parsing
+- [@mozilla/readability](https://www.npmjs.com/package/@mozilla/readability) - Web content extraction
 - [csv-parse](https://www.npmjs.com/package/csv-parse) - CSV parsing
+- [duck-duck-scrape](https://www.npmjs.com/package/duck-duck-scrape) - DuckDuckGo search
+- [fast-xml-parser](https://www.npmjs.com/package/fast-xml-parser) - XML parsing
+- [google-sr](https://www.npmjs.com/package/google-sr) - Google search
+- [jsdom](https://www.npmjs.com/package/jsdom) - DOM emulation for web scraping
+- [mammoth](https://www.npmjs.com/package/mammoth) - DOCX parsing
+- [pdf-parse](https://www.npmjs.com/package/pdf-parse) - PDF parsing
+- [puppeteer](https://www.npmjs.com/package/puppeteer) - Headless browser automation
 - [tesseract.js](https://www.npmjs.com/package/tesseract.js) - OCR
 - [wikipedia](https://www.npmjs.com/package/wikipedia) - Wikipedia API
-- [@mozilla/readability](https://www.npmjs.com/package/@mozilla/readability) - Web content extraction
 
 ## License
 
@@ -134,4 +139,4 @@ MIT
 
 ## Contributing
 
-Contributions welcome! Please read the [contributing guidelines](CONTRIBUTING.md) first.
+Contributions VERY welcome!! Please read the [contributing guidelines](CONTRIBUTING.md) first.

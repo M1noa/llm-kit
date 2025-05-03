@@ -41,33 +41,67 @@ export interface ParseResult {
 }
 
 // detect file type from path or buffer
-function detectFileType(pathOrBuffer: string | Buffer): FileType {
+function detectFileType(pathOrBuffer: string | Buffer, filename?: string): FileType {
+  // if we got a string path, use that
   if (typeof pathOrBuffer === "string") {
     const ext = extname(pathOrBuffer).toLowerCase();
-    switch (ext) {
-      case ".pdf":
-        return "pdf";
-      case ".docx":
-        return "docx";
-      case ".csv":
-        return "csv";
-      case ".txt":
-        return "text";
-      case ".xml":
-        return "xml";
-      case ".json":
-        return "json";
-      case ".png":
-      case ".jpg":
-      case ".jpeg":
-      case ".bmp":
-      case ".gif":
-        return "image";
-      default:
-        return "unknown";
-    }
+    return getTypeFromExtension(ext);
   }
+  
+  // if we got a filename hint with the buffer, use that
+  if (filename) {
+    const ext = extname(filename).toLowerCase();
+    return getTypeFromExtension(ext);
+  }
+  
+  // ok fine we'll try to detect from buffer magic numbers
+  const header = pathOrBuffer.slice(0, 4).toString('hex');
+  
+  // check magic numbers
+  if (header.startsWith('89504e47')) return 'image'; // PNG
+  if (header.startsWith('ffd8')) return 'image';     // JPEG
+  if (header.startsWith('424d')) return 'image';     // BMP
+  if (header.startsWith('47494638')) return 'image'; // GIF
+  if (header.startsWith('25504446')) return 'pdf';   // PDF
+  if (header.startsWith('504b')) return 'docx';      // ZIP/DOCX
+  if (pathOrBuffer.slice(0, 5).toString() === '<?xml') return 'xml';
+  
+  // attempt json detection
+  try {
+    JSON.parse(pathOrBuffer.toString());
+    return 'json';
+  } catch {
+    // not json, continue
+  }
+  
+  // check if it looks like csv
+  const firstLine = pathOrBuffer.toString().split('\n')[0];
+  if (firstLine && firstLine.includes(',')) return 'csv';
+  
+  // probably just text if we got here
+  if (pathOrBuffer.toString().trim()) return 'text';
+  
   return "unknown";
+}
+
+// helper to get type from file extension
+function getTypeFromExtension(ext: string): FileType {
+  switch (ext) {
+    case ".pdf": return "pdf";
+    case ".docx": return "docx";
+    case ".csv": return "csv";
+    case ".txt": return "text";
+    case ".xml": return "xml";
+    case ".json": return "json";
+    case ".png":
+    case ".jpg":
+    case ".jpeg":
+    case ".bmp":
+    case ".gif":
+      return "image";
+    default:
+      return "unknown";
+  }
 }
 
 // parse JSON files
@@ -329,7 +363,8 @@ async function parseImage(
 // main parse function
 export async function parse(
   pathOrBuffer: string | Buffer,
-  options: ParseOptions = {}
+  options: ParseOptions = {},
+  filename?: string // optional filename hint for buffer inputs
 ): Promise<ParseResult> {
   try {
     // Get file buffer
@@ -338,8 +373,8 @@ export async function parse(
         ? readFileSync(pathOrBuffer)
         : pathOrBuffer;
 
-    // Detect file type
-    const fileType = detectFileType(pathOrBuffer);
+    // Detect file type (pass filename hint if we have it)
+    const fileType = detectFileType(pathOrBuffer, filename);
 
     // Parse based on file type
     switch (fileType) {

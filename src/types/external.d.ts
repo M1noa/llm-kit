@@ -1,4 +1,4 @@
-declare module 'pdf-parse' {
+declare module "pdf-parse" {
   interface PDFData {
     numpages: number;
     text: string;
@@ -11,16 +11,7 @@ declare module 'pdf-parse' {
   export default PDFParse;
 }
 
-declare module 'docx4js' {
-  interface DocxDocument {
-    officeDocument: {
-      content: () => any;
-    };
-  }
-  export function load(buffer: Buffer): Promise<DocxDocument>;
-}
-
-declare module 'mammoth' {
+declare module "mammoth" {
   interface ExtractResult {
     value: string;
     messages: Array<{
@@ -40,7 +31,7 @@ declare module 'mammoth' {
   export function convertToHtml(options: Options): Promise<ExtractResult>;
 }
 
-declare module 'tesseract.js' {
+declare module "tesseract.js" {
   interface WorkerOptions {
     logger?: (message: any) => void;
     errorHandler?: (error: any) => void;
