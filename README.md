@@ -1,12 +1,14 @@
 # llm-search 🔍
 
+[![npm version](https://badge.fury.io/js/llm-search.svg)](https://badge.fury.io/js/llm-search)
+
 > A Node.js module for searching and scraping web content, designed for LLMs but useful for everyone!
 
 ## Features
 
 - Search multiple engines (Google, DuckDuckGo)
 - Wikipedia search and content extraction
-- HackerNews scraping 
+- HackerNews scraping
 - Webpage content extraction
 - Document parsing (PDF, DOCX, CSV)
 - Image OCR/text extraction support
@@ -26,24 +28,24 @@ npm install tesseract.js-data
 ## Quick Start
 
 ```typescript
-import { search, parse } from 'llm-search';
+import { search, parse } from "llm-search";
 
 // Web Search
-const results = await search('typescript tutorial');
+const results = await search("typescript tutorial");
 console.log(results);
 
 // Parse Documents
-const pdfResult = await parse('document.pdf');
+const pdfResult = await parse("document.pdf");
 console.log(pdfResult.text);
 
-const csvResult = await parse('data.csv', {
-  csv: { columns: true }
+const csvResult = await parse("data.csv", {
+  csv: { columns: true },
 });
 console.log(csvResult.data);
 
 // OCR Images
-const imageResult = await parse('image.png', {
-  language: 'eng'
+const imageResult = await parse("image.png", {
+  language: "eng",
 });
 console.log(imageResult.text);
 ```
@@ -51,11 +53,13 @@ console.log(imageResult.text);
 ## Supported File Types
 
 ### Documents
+
 - PDF files (`.pdf`)
 - Word documents (`.docx`)
 - CSV files (`.csv`)
 
 ### Images (OCR)
+
 - PNG (`.png`)
 - JPEG (`.jpg`, `.jpeg`)
 - BMP (`.bmp`)
@@ -74,53 +78,59 @@ See the [docs](./docs) directory for detailed documentation:
 ## Example Usage
 
 ### Web Search
-```typescript
-import { search } from 'llm-search';
 
-const results = await search('typescript tutorial');
+```typescript
+import { search } from "llm-search";
+
+const results = await search("typescript tutorial");
 console.log(results);
 ```
 
 ### Document Parsing
+
 ```typescript
-import { parse } from 'llm-search';
+import { parse } from "llm-search";
 
 // Parse PDF
-const pdfResult = await parse('document.pdf');
+const pdfResult = await parse("document.pdf");
 console.log(pdfResult.text);
 
 // Parse CSV with options
-const csvResult = await parse('data.csv', {
+const csvResult = await parse("data.csv", {
   csv: {
-    delimiter: ';',
-    columns: true
-  }
+    delimiter: ";",
+    columns: true,
+  },
 });
 console.log(csvResult.data);
 
 // OCR Image
-const imageResult = await parse('image.png', {
-  language: 'eng' // supports multiple languages
+const imageResult = await parse("image.png", {
+  language: "eng", // supports multiple languages
 });
 console.log(imageResult.text);
 ```
 
 ### Error Handling
+
 ```typescript
 try {
-  const result = await parse('document.pdf');
+  const result = await parse("document.pdf");
   console.log(result.text);
 } catch (error) {
-  if (error.code === 'PDF_PARSE_ERROR') {
-    console.error('PDF parsing failed:', error.message);
+  if (error.code === "PDF_PARSE_ERROR") {
+    console.error("PDF parsing failed:", error.message);
   }
   // Handle other errors
 }
 ```
 
+[![NPM Download Stats](https://nodei.co/npm/llm-search.png?downloads=true)](https://www.npmjs.com/package/llm-search)
+
 ## Dependencies
 
 This package uses these great libraries:
+
 - [@mozilla/readability](https://www.npmjs.com/package/@mozilla/readability) - Web content extraction
 - [csv-parse](https://www.npmjs.com/package/csv-parse) - CSV parsing
 - [duck-duck-scrape](https://www.npmjs.com/package/duck-duck-scrape) - DuckDuckGo search
@@ -137,6 +147,6 @@ This package uses these great libraries:
 
 MIT
 
-## Contributing
+## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](TODO.md)
 
 Contributions VERY welcome!! Please read the [contributing guidelines](CONTRIBUTING.md) first.
