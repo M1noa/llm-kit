@@ -1,6 +1,6 @@
 {
   "name": "llm-search",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Node.js module for searching and scraping web content, designed for LLMs but useful for any project where webscraping is needed!",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -24,7 +24,14 @@
     "duckduckgo",
     "typescript",
     "web-scraping",
-    "content-extraction"
+    "content-extraction",
+    "llm-scrape",
+    "web-search",
+    "scrape",
+    "web-scrape",
+    "web-crawl",
+    "crawling",
+    "web-crawler"
   ],
   "author": {
     "name": "Minoa",
@@ -33,17 +40,23 @@
   "license": "MIT",
   "dependencies": {
     "@mozilla/readability": "^0.6.0",
+    "csv-parse": "^5.6.0",
+    "docx4js": "^3.3.0",
     "duck-duck-scrape": "^2.2.7",
+    "fast-xml-parser": "^5.2.1",
     "google-sr": "^5.0.0",
     "jsdom": "^24.0.0",
+    "mammoth": "^1.9.0",
+    "pdf-parse": "^1.1.1",
     "puppeteer": "^24.7.2",
+    "tesseract.js": "^6.0.1",
     "wikipedia": "^2.1.2"
   },
   "devDependencies": {
     "@types/jsdom": "^21.1.6",
     "@types/node": "^20.11.24",
-    "typescript": "^5.3.3",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   },
   "engines": {
     "node": ">=16"

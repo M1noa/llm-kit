@@ -4,81 +4,129 @@
 
 ## Features
 
--  Search multiple engines (Google, DuckDuckGo)
--  Wikipedia & HackerNews Scrapeing
--  Website text extraction
-- ⚡ **No API keys required**
--  Automatic fallbacks
+- 🌐 Search multiple engines (Google, DuckDuckGo)
+- 📚 Wikipedia search and content extraction
+- 💻 HackerNews integration 
+- 📄 Webpage content extraction
+- 📝 Document parsing (PDF, DOCX, CSV)
+- 🖼️ Image OCR support
+- ⚡ No API keys required
+- 🔄 Automatic fallbacks
+- 🎯 TypeScript support
 
 ## Installation
 
 ```bash
 npm install llm-search
+
+# Optional: Install OCR language data for non-English languages
+npm install tesseract.js-data
 ```
 
 ## Quick Start
 
 ```typescript
-import { search, wikiSearch, getTopStories, getWebpageContent } from 'llm-search';
+import { search, parse } from 'llm-search';
 
-// Search the web
+// Web Search
 const results = await search('typescript tutorial');
 console.log(results);
 
-// Search Wikipedia
-const wikiResults = await wikiSearch('Node.js');
-console.log(wikiResults);
+// Parse Documents
+const pdfResult = await parse('document.pdf');
+console.log(pdfResult.text);
 
-// Get HackerNews stories
-const hnStories = await getTopStories(5);
-console.log(hnStories);
+const csvResult = await parse('data.csv', {
+  csv: { columns: true }
+});
+console.log(csvResult.data);
 
-// Extract webpage content
-const content = await getWebpageContent('https://example.com');
-console.log(content.textContent);
+// OCR Images
+const imageResult = await parse('image.png', {
+  language: 'eng'
+});
+console.log(imageResult.text);
 ```
 
-### JavaScript Usage
-The module works seamlessly with JavaScript projects:
+## Supported File Types
 
-```javascript
-const { search, wikiSearch, getTopStories, getWebpageContent } = require('llm-search');
+### Documents
+- PDF files (`.pdf`)
+- Word documents (`.docx`)
+- CSV files (`.csv`)
 
-// Use the same API as TypeScript
-async function example() {
-  const results = await search('nodejs tutorial');
-  console.log(results);
-}
-```
-
-## Full Example
-
-Check out [src/test.ts](src/test.ts) for a complete example that demonstrates all features including:
-- Web search with Google and DuckDuckGo
-- Wikipedia search and content extraction
-- HackerNews story fetching
-- Webpage content extraction
-- Error handling
-- Response formats
+### Images (OCR)
+- PNG (`.png`)
+- JPEG (`.jpg`, `.jpeg`)
+- BMP (`.bmp`)
+- GIF (`.gif`)
 
 ## Documentation
 
 See the [docs](./docs) directory for detailed documentation:
 
-- [Search Module](./docs/search.md)
-- [Wikipedia Module](./docs/wikipedia.md)
-- [HackerNews Module](./docs/hackernews.md)
-- [Webpage Module](./docs/webpage.md)
+- [Search](./docs/search.md) - Web search capabilities
+- [Wikipedia](./docs/wikipedia.md) - Wikipedia integration
+- [HackerNews](./docs/hackernews.md) - HackerNews API
+- [Webpage](./docs/webpage.md) - Web content extraction
+- [Parser](./docs/parser.md) - Document and image parsing
+
+## Example Usage
+
+### Web Search
+```typescript
+import { search } from 'llm-search';
+
+const results = await search('typescript tutorial');
+console.log(results);
+```
+
+### Document Parsing
+```typescript
+import { parse } from 'llm-search';
+
+// Parse PDF
+const pdfResult = await parse('document.pdf');
+console.log(pdfResult.text);
+
+// Parse CSV with options
+const csvResult = await parse('data.csv', {
+  csv: {
+    delimiter: ';',
+    columns: true
+  }
+});
+console.log(csvResult.data);
+
+// OCR Image
+const imageResult = await parse('image.png', {
+  language: 'eng' // supports multiple languages
+});
+console.log(imageResult.text);
+```
+
+### Error Handling
+```typescript
+try {
+  const result = await parse('document.pdf');
+  console.log(result.text);
+} catch (error) {
+  if (error.code === 'PDF_PARSE_ERROR') {
+    console.error('PDF parsing failed:', error.message);
+  }
+  // Handle other errors
+}
+```
 
 ## Dependencies
 
-This package wouldn't be possible without these awesome libraries:
-
-- [wikipedia](https://www.npmjs.com/package/wikipedia) - Wikipedia API wrapper
-- [@mozilla/readability](https://www.npmjs.com/package/@mozilla/readability) - Mozilla's Readability library
-- [google-sr](https://www.npmjs.com/package/google-sr) - Google search scraping
-- [duck-duck-scrape](https://www.npmjs.com/package/duck-duck-scrape) - DuckDuckGo scraping
-- [node-hn-api](https://www.npmjs.com/package/node-hn-api) - HackerNews API wrapper
+This package uses these great libraries:
+- [pdf-parse](https://www.npmjs.com/package/pdf-parse) - PDF parsing
+- [docx4js](https://www.npmjs.com/package/docx4js) - DOCX parsing
+- [csv-parse](https://www.npmjs.com/package/csv-parse) - CSV parsing
+- [tesseract.js](https://www.npmjs.com/package/tesseract.js) - OCR
+- [wikipedia](https://www.npmjs.com/package/wikipedia) - Wikipedia API
+- [@mozilla/readability](https://www.npmjs.com/package/@mozilla/readability) - Web content extraction
 
 ## License
 
@@ -86,4 +134,4 @@ MIT
 
 ## Contributing
 
-Contributions welcome!!
+Contributions welcome! Please read the [contributing guidelines](CONTRIBUTING.md) first.

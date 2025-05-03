@@ -1,0 +1,14 @@
+This is a test text file.
+It contains multiple lines
+of plain text content
+that can be used for testing
+the parser module.
+
+The parser should handle:
+- Multiple lines
+- Empty lines
+- Special characters: !@#$%^&*()
+- Numbers: 123456789
+- Unicode: ñ, é, ü
+
+End of test file.

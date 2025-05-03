@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <document>
+        <metadata>
+            <title>Test XML Document</title>
+            <author>Test User</author>
+            <date>2025-05-02</date>
+            <version>1.0.0</version>
+        </metadata>
+        <content>
+            <paragraph>
+                This is a test XML file that contains structured content
+                for testing the parser module's capabilities.
+            </paragraph>
+            <paragraph>
+                It includes various elements and attributes to ensure
+                proper handling of XML documents.
+            </paragraph>
+            <list type="bullet">
+                <item>First item</item>
+                <item>Second item</item>
+                <item>Third item</item>
+            </list>
+            <table>
+                <row>
+                    <cell>Header 1</cell>
+                    <cell>Header 2</cell>
+                </row>
+                <row>
+                    <cell>Data 1</cell>
+                    <cell>Data 2</cell>
+                </row>
+            </table>
+        </content>
+        <settings>
+            <option name="debug" value="true"/>
+            <option name="verbose" value="false"/>
+            <option name="mode" value="test"/>
+        </settings>
+    </document>
+</root>
