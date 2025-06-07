@@ -1,130 +1,169 @@
-# Webpage Module 📄
+# Webpage Module
 
-Extract clean, readable content from any webpage using Mozilla's Readability library.
+This module provides functionality to extract and process content from web pages, including text extraction, HTML processing, and asset discovery.
 
-## Functions
+## Installation
 
-### getWebpageContent(url: string, usePuppeteer?: boolean)
-
-Extract readable content from a webpage.
-
-```typescript
-import { getWebpageContent } from 'llm-search';
-
-// For static websites
-const content = await getWebpageContent('https://example.com');
-
-// For JavaScript-heavy sites
-const content = await getWebpageContent('https://example.com', true);
+```bash
+# Install core dependencies
+npm install @mozilla/readability jsdom puppeteer turndown
 ```
 
-### getWebpageText(url: string, usePuppeteer?: boolean)
+## Features
 
-Get just the text content of a webpage.
+- Extract readable content using Mozilla's Readability
+- Clean HTML processing (remove scripts, styles, etc.)
+- Convert relative URLs to absolute
+- Extract asset URLs (images, downloadable files)
+- Convert HTML to Markdown
+- Detect and extract favicons
+- Support for special sites (Wikipedia, Hacker News)
+- Automatic redirect handling
+
+## Usage
 
 ```typescript
-import { getWebpageText } from 'llm-search';
+import { getWebpageContent, getWebpageText, isUrlAccessible } from "llm-kit";
 
-const text = await getWebpageText('https://example.com');
+// Get full webpage content including processed HTML and assets
+const content = await getWebpageContent("https://example.com");
+console.log(content.title); // page title
+console.log(content.textContent); // clean text content
+console.log(content.markdown); // markdown version
+console.log(content.assets); // list of assets
+console.log(content.faviconUrl); // favicon URL
+
+// Get just the readable text content
+const text = await getWebpageText("https://example.com");
+
+// Check if URL is accessible
+const isAccessible = await isUrlAccessible("https://example.com");
 ```
 
-### isUrlAccessible(url: string)
+## Return Types
 
-Check if a URL is accessible.
-
-```typescript
-import { isUrlAccessible } from 'llm-search';
-
-const isAccessible = await isUrlAccessible('https://example.com');
-```
-
-## Result Format
+The module returns a `WebpageContent` object with the following structure:
 
 ```typescript
 interface WebpageContent {
-  title?: string;      // page title
-  content: string;     // HTML content
-  textContent: string; // plain text content
-  length: number;      // content length
-  excerpt?: string;    // short excerpt
-  siteName?: string;   // website name
+  title: string; // page title
+  content: string; // raw HTML content
+  textContent: string; // clean text content
+  length: number; // content length
+  excerpt?: string; // short excerpt
+  siteName?: string; // site name if available
+  faviconUrl?: string; // absolute URL of favicon
+  processedHtml?: string; // cleaned HTML with absolute URLs
+  assets?: WebpageAsset[]; // list of asset URLs
+  markdown?: string; // HTML converted to Markdown
 }
+
+interface WebpageAsset {
+  url: string; // absolute URL of asset
+  type: "image" | "link" | "other";
+  alt?: string; // alt text for images
+}
+```
+
+## HTML Processing
+
+The module performs several cleanup operations on HTML:
+
+- Removes scripts, styles, and other non-content elements
+- Removes HTML comments
+- Converts relative URLs to absolute
+- Preserves important content elements (text, headings, images, links)
+- Removes JavaScript event handlers
+- Removes unnecessary attributes while preserving essential ones
+- Properly handles malformed HTML
+
+## Asset Discovery
+
+Extracts URLs for:
+
+- Images (`<img>` tags)
+- Downloadable files (PDFs, DOCs, etc.)
+- Links to supported file types
+
+## Special Site Handling
+
+### Wikipedia Pages
+
+- Extracts clean article content
+- Preserves article structure
+- Includes site metadata
+
+### Hacker News
+
+- Extracts story content and comments
+- Preserves story metadata
+- Handles special HN formatting
+
+## Dynamic Content
+
+For sites that require JavaScript:
+
+```typescript
+// Use Puppeteer for dynamic content
+const content = await getWebpageContent("https://example.com", true);
 ```
 
 ## Error Handling
 
-All functions throw a `SearchError` on failure:
-
 ```typescript
 try {
-  const content = await getWebpageContent('https://example.com');
-} catch (err) {
-  if (err.code === 'WEBPAGE_ERROR') {
-    console.error('failed to get content:', err.message);
+  const content = await getWebpageContent("https://example.com");
+} catch (error) {
+  if (error.code === "WEBPAGE_ERROR") {
+    console.error("Failed to get content:", error.message);
   }
 }
 ```
 
-## Tips
+## URL and Redirect Handling
 
-### When to Use Puppeteer
+The module handles various URL scenarios:
 
-Set `usePuppeteer: true` when:
-- Site requires JavaScript to load content
-- Content is dynamically loaded
-- Site uses client-side rendering
-- You need to wait for all resources to load
+- Automatically follows HTTP redirects (301, 302, etc.)
+- Updates base URL for relative paths after redirects
+- Preserves URL parameters and fragments
+- Handles both HTTP and meta refresh redirects in Puppeteer mode
+- Provides final URL after redirects in results
 
-Example:
+Example redirect handling:
+
 ```typescript
-// For React/Vue/Angular apps
-const content = await getWebpageContent('https://spa-site.com', true);
+// Short URL that redirects
+const content = await getWebpageContent("http://bit.ly/example");
+console.log(content.faviconUrl); // Uses final URL after redirect
+
+// Meta refresh redirects (requires Puppeteer)
+const content = await getWebpageContent("http://old-site.com", true);
 ```
 
-### Content Cleaning
+## Notes
 
-The module automatically:
-- Removes ads and clutter
-- Preserves important images
-- Extracts main article content
-- Maintains basic formatting
-- Cleans up navigation/footers
+- Some sites may block automated access
+- Dynamic content may require Puppeteer mode
+- Large pages may take longer to process
+- Some sites (YouTube, Twitter, etc.) are not supported due to their structure
+- Redirects are handled automatically in both normal and Puppeteer mode
+- All asset URLs are made absolute based on final URL after redirects
+- Redirects are automatically followed to final destination
+- The final URL after redirects is used for all processing
+- Both HTTP and meta redirects are handled when using Puppeteer mode
 
-### Performance
+## URL Handling
 
-- Use `getWebpageText()` if you only need text
-- Avoid Puppeteer for static sites
-- Check URL accessibility first
-- Consider caching results
+The module automatically handles various URL scenarios:
 
-### Limitations
-
-- Some sites may block scraping
-- Complex layouts might not parse perfectly
-- JavaScript-heavy sites need Puppeteer
-- Dynamic content might be missed
-- Some paywalls can't be bypassed
-
-## Examples
-
-### Get Article Content
 ```typescript
-const article = await getWebpageContent('https://blog.example.com/post');
-console.log(article.title);
-console.log(article.excerpt);
-console.log(article.textContent);
+// Handles redirects automatically
+const content = await getWebpageContent("http://t.co/shortlink");
+
+// Updates relative paths based on final URL after redirects
+const content = await getWebpageContent("http://example.com/redirect-page");
+
+// Works with both HTTP and meta refreshes
+const content = await getWebpageContent("http://old-site.com", true); // use Puppeteer for meta refreshes
 ```
-
-### Check and Get Content
-```typescript
-if (await isUrlAccessible(url)) {
-  const content = await getWebpageContent(url);
-  // process content
-}
-```
-
-### Handle Dynamic Sites
-```typescript
-const content = await getWebpageContent(url, {
-  usePuppeteer: true
-});

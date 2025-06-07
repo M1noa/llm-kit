@@ -6,57 +6,38 @@ todo list of what i need to add or do with this project
 
 - [ ] scrape to structured json like (or using) [mishushakov/llm-scraper](https://github.com/mishushakov/llm-scraper)
 
-- [ ] make webpage responnd with json of the title, favicon, processed html without styling or javascript, images and other files, and readability text and a markdown version of it
+- [x] make webpage responnd with/let you get of the title, favicon, processed html without styling or javascript, images and other files, and readability text and a markdown version
 
 - [ ] website crawling module via [crawlee](https://www.npmjs.com/package/crawlee)
 
 - [x] [pdf](https://www.npmjs.com/package/pdf-parse), [docx](https://www.npmjs.com/package/docx4js), [csv](https://www.npmjs.com/package/csv), [image](https://www.npmjs.com/package/tesseract) (default eng if lang not givin), etc // doc parser to objects, javascript, or text
 
-- [ ] autocomplete module via
-```
-      google:
-      http://suggestqueries.google.com/complete/search?client=firefox&q=hello%20world
-      fallback to
-      https://www.google.com/complete/search?client=gws-wiz&q=hello%20world
+- [x] make an autocomplete module
 
-      duckduckgo:
-      https://duckduckgo.com/ac/?kl=wt-wt&q=hello%20world
+- [x] make a news module to get news from [google news](https://www.npmjs.com/package/google-news-scraper) and [duckduckgo](https://www.npmjs.com/package/duck-duck-scrape) (use news search cunfion on duck duck scrape) defautlt being google news
 
-      yahoo:
-      https://search.yahoo.com/sugg/gossip/gossip-us-fastbreak?output=sd1&command=hello%20world
-
-      brave:
-      https://search.brave.com/api/suggest?rich=true&source=web&country=us&q=hello+world
-
-      yandex:
-      https://yandex.com/suggest/suggest-ya.cgi?srv=morda_com_desktop&wiz=TrWth&uil=en&fact=1&v=4&icon=1&part=hello%20world
-
-      ecosia:
-      https://ac.ecosia.org/?q=hello+world
-
-      startpage // bing:
-      https://www.startpage.com/suggestions?q=hello%20world
-
-      qwant:
-      https://api.qwant.com/v3/suggest?q=hello%20world
-
-      swisscows:
-      https://api.swisscows.com/suggest?locale=en-US&itemsCount=20&query=hello%20world
-```
-let it be customizable but use duckduckgo by default
-
-- [ ] make a news module to get news from [google news](https://www.npmjs.com/package/google-news-scraper) and [duckduckgo](https://www.npmjs.com/package/duck-duck-scrape) (use news search cunfion on duck duck scrape) defautlt being google news
-
-- [ ] finance module via [yahoo finance](https://www.npmjs.com/package/yahoo-finance2) (default) and [google finance](https://www.npmjs.com/package/google-finance) if this module still works
+- [x] finance module via [yahoo finance](https://www.npmjs.com/package/yahoo-finance2) (default) and [google finance](https://www.npmjs.com/package/google-finance) if this module still works
 
 - [ ] flights module to search flights via [google flights](https://www.npmjs.com/package/google-flights) if it works
 
 - [ ] proxy support
 
-- [ ] Google & DDG Direct Answer Box scraping in the webpage module
+- [x] reddit module via getting top sub reddit stuff via https://www.reddit.com/r/news/hot.json and searching via https://www.reddit.com/search.json?q=news&type=posts&sort=hot and getting post info via getting the post url and adding .json like https://www.reddit.com/r/NikkeOutpost/comments/1kdoe4h/new_nikke_news.json
 
-- [ ] tmdb/anidb/thetvdb scraping without api key (including getting watch providers / streaming services)
+- [x] add google news rss option to use gooogle news without the scraping modle searching:https://news.google.com/rss/search?q=<what to search for> top/new:https://news.google.com/rss
 
-- [ ] events module via [google events](https://www.npmjs.com/package/google-events-scraper) that that module still works
+- [x] fix image parsing to not create .traineddata files
 
-- [ ] search images in web search
+- [x] make sure the docs are up to date and detailed enough also add a command to install all the dependencies to the readme.md of the docs also update the normal readme.md to make sure it has all the dependencies this projec tuses ian it
+
+- [x] make sure that webpage support if a site responds with a redirect it follows it
+
+- [x] same search engines in autocomplete added to search
+
+- [ ] make search support both quiries with a search engine provided and giving a url to a search engine
+
+- [ ] github search & repo & user info
+
+- [ ] model handling for thinking, searching, etc inside the module
+
+- [ ] model api support so people can just give their api key and model n stuff and the module does all the requesting

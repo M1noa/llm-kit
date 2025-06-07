@@ -6,9 +6,12 @@ import { randomBytes } from "crypto";
 import pdfParse from "pdf-parse";
 import mammoth from "mammoth";
 import { parse as csvParse } from "csv-parse/sync";
-import { createWorker } from "tesseract.js";
+import Lens from "chrome-lens-ocr";
 import { XMLParser } from "fast-xml-parser";
 import { SearchError } from "../types";
+
+// initialize lens ocr
+const lens = new Lens();
 
 // supported file types
 export type FileType =
@@ -22,7 +25,8 @@ export type FileType =
   | "unknown";
 
 export interface ParseOptions {
-  language?: string; // Language for OCR (default: 'eng')
+  ocrProvider?: 'google-lens'; // OCR provider to use (only google-lens for now)
+  language?: string; // Language for OCR (used by google lens)
   csv?: {
     delimiter?: string;
     columns?: boolean;
@@ -335,20 +339,19 @@ async function parseImage(
   options?: ParseOptions
 ): Promise<ParseResult> {
   try {
-    const worker = await createWorker();
-    const lang = options?.language || "eng";
-
-    // Initialize worker with language
-    await worker.reinitialize(lang);
-    const result = await worker.recognize(buffer);
-    await worker.terminate();
+    // use google lens ocr by default
+    const result = await lens.scanByBuffer(buffer);
+    
+    // combine all text segments
+    const text = result.segments.map(segment => segment.text).join('\n');
 
     return {
       type: "image",
-      text: result.data.text,
+      text: text,
       metadata: {
-        language: lang,
-        confidence: result.data.confidence,
+        language: result.language,
+        provider: 'google-lens',
+        segments: result.segments,
       },
     };
   } catch (error) {

@@ -9,9 +9,9 @@ The Wikipedia module provides functions for searching Wikipedia and retrieving a
 Search Wikipedia articles.
 
 ```typescript
-import { wikiSearch } from 'llm-search';
+import { wikiSearch } from "llm-kit";
 
-const results = await wikiSearch('Node.js', 5);
+const results = await wikiSearch("Node.js", 5);
 ```
 
 ### wikiGetContent(title: string)
@@ -19,9 +19,9 @@ const results = await wikiSearch('Node.js', 5);
 Get the full content of a Wikipedia article.
 
 ```typescript
-import { wikiGetContent } from 'llm-search';
+import { wikiGetContent } from "llm-kit";
 
-const content = await wikiGetContent('Node.js');
+const content = await wikiGetContent("Node.js");
 ```
 
 ### wikiGetSummary(title: string)
@@ -29,9 +29,9 @@ const content = await wikiGetContent('Node.js');
 Get a summary of a Wikipedia article.
 
 ```typescript
-import { wikiGetSummary } from 'llm-search';
+import { wikiGetSummary } from "llm-kit";
 
-const summary = await wikiGetSummary('Node.js');
+const summary = await wikiGetSummary("Node.js");
 ```
 
 ### setWikiLang(language: string)
@@ -39,17 +39,17 @@ const summary = await wikiGetSummary('Node.js');
 Set the Wikipedia language (default: 'en').
 
 ```typescript
-import { setWikiLang } from 'llm-search';
+import { setWikiLang } from "llm-kit";
 
-setWikiLang('es'); // switch to Spanish Wikipedia
+setWikiLang("es"); // switch to Spanish Wikipedia
 ```
 
 ## Result Format
 
 ```typescript
 interface WikipediaResult extends SearchResult {
-  extract?: string;    // article extract/summary
-  thumbnail?: string;  // URL of article thumbnail image
+  extract?: string; // article extract/summary
+  thumbnail?: string; // URL of article thumbnail image
 }
 ```
 
@@ -59,10 +59,10 @@ All functions throw a `SearchError` on failure:
 
 ```typescript
 try {
-  const results = await wikiSearch('nodejs');
+  const results = await wikiSearch("nodejs");
 } catch (err) {
-  if (err.code === 'WIKI_SEARCH_ERROR') {
-    console.error('wikipedia search failed:', err.message);
+  if (err.code === "WIKI_SEARCH_ERROR") {
+    console.error("wikipedia search failed:", err.message);
   }
 }
 ```
