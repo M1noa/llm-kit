@@ -1,4 +1,4 @@
-# llm-search 🔍
+# llm-kit 🔍
 
 [![npm version](https://badge.fury.io/js/llm-search.svg)](https://badge.fury.io/js/llm-search)
 
